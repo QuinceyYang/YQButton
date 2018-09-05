@@ -13,6 +13,8 @@
 		4DCEE4A9213F79990083D0D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DCEE4A8213F79990083D0D8 /* Assets.xcassets */; };
 		4DCEE4AC213F79990083D0D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4DCEE4AA213F79990083D0D8 /* LaunchScreen.storyboard */; };
 		4DCEE4AF213F79990083D0D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DCEE4AE213F79990083D0D8 /* main.m */; };
+		4DCEE4B8213F7B140083D0D8 /* YQButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DCEE4B7213F7B140083D0D8 /* YQButton.m */; };
+		4DCEE4BA213F7B520083D0D8 /* icon_photo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4DCEE4B9213F7B520083D0D8 /* icon_photo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,9 @@
 		4DCEE4AB213F79990083D0D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4DCEE4AD213F79990083D0D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4DCEE4AE213F79990083D0D8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4DCEE4B6213F7B140083D0D8 /* YQButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YQButton.h; sourceTree = "<group>"; };
+		4DCEE4B7213F7B140083D0D8 /* YQButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YQButton.m; sourceTree = "<group>"; };
+		4DCEE4B9213F7B520083D0D8 /* icon_photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_photo.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +63,8 @@
 		4DCEE49E213F79980083D0D8 /* YQButton */ = {
 			isa = PBXGroup;
 			children = (
+				4DCEE4B9213F7B520083D0D8 /* icon_photo.png */,
+				4DCEE4B5213F7B140083D0D8 /* Source */,
 				4DCEE49F213F79980083D0D8 /* AppDelegate.h */,
 				4DCEE4A0213F79980083D0D8 /* AppDelegate.m */,
 				4DCEE4A2213F79980083D0D8 /* ViewController.h */,
@@ -69,6 +76,15 @@
 				4DCEE4AE213F79990083D0D8 /* main.m */,
 			);
 			path = YQButton;
+			sourceTree = "<group>";
+		};
+		4DCEE4B5213F7B140083D0D8 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				4DCEE4B6213F7B140083D0D8 /* YQButton.h */,
+				4DCEE4B7213F7B140083D0D8 /* YQButton.m */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -131,6 +147,7 @@
 				4DCEE4AC213F79990083D0D8 /* LaunchScreen.storyboard in Resources */,
 				4DCEE4A9213F79990083D0D8 /* Assets.xcassets in Resources */,
 				4DCEE4A7213F79980083D0D8 /* Main.storyboard in Resources */,
+				4DCEE4BA213F7B520083D0D8 /* icon_photo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +161,7 @@
 				4DCEE4A4213F79980083D0D8 /* ViewController.m in Sources */,
 				4DCEE4AF213F79990083D0D8 /* main.m in Sources */,
 				4DCEE4A1213F79980083D0D8 /* AppDelegate.m in Sources */,
+				4DCEE4B8213F7B140083D0D8 /* YQButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
