@@ -177,7 +177,7 @@ typedef NS_ENUM(NSUInteger, YQButtonType) {
 {
     [super layoutSubviews];
     
-    if (self.imageView==nil || self.titleLabel==nil) {
+    if (self.imageView==nil || self.titleLabel==nil || _yqButtonType==YQButtonTypeDefault) {
         return;
     }
     else {
@@ -312,5 +312,22 @@ typedef NS_ENUM(NSUInteger, YQButtonType) {
     // Drawing code
 }
 */
+
+#pragma mark - setter
+
+- (void)setTapAction:(void (^)(YQButton *))tapAction {
+    _tapAction = tapAction;
+    if (_tapAction) {
+        [self removeTarget:self action:@selector(tapButton:) forControlEvents:UIControlEventTouchUpInside];
+        [self addTarget:self action:@selector(tapButton:) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
+#pragma mark -
+- (void)tapButton:(YQButton *)sender {
+    if (self.tapAction) {
+        self.tapAction(sender);
+    }
+}
 
 @end

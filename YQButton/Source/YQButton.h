@@ -10,6 +10,8 @@
 
 @interface YQButton : UIButton
 
+@property (nonatomic, copy) void (^tapAction)(YQButton *sender);
+
 /**
  * 图片在上
  */
