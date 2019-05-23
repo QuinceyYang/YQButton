@@ -163,8 +163,6 @@ typedef NS_ENUM(NSUInteger, YQButtonType) {
     if (self) {
         _yqButtonType = YQButtonTypeContentAtCenter;
         _space = space;
-        self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        self.contentVerticalAlignment   = UIControlContentVerticalAlignmentCenter;
     }
     
     return self;
@@ -274,13 +272,9 @@ typedef NS_ENUM(NSUInteger, YQButtonType) {
                 
             case YQButtonTypeContentAtCenter:
             {
-                NSLog();
-                //有两次进入，所以_space/4
-                if (self.titleLabel.frame.origin.x-CGRectGetMaxX(self.imageView.frame) < _space) {
-                    self.imageView.frame = CGRectMake(self.imageView.frame.origin.x-_space/4, self.imageView.frame.origin.y, self.imageView.frame.size.width, self.imageView.frame.size.height);
-                    
-                    self.titleLabel.frame = CGRectMake(self.titleLabel.frame.origin.x+_space/4, self.titleLabel.frame.origin.y, self.titleLabel.frame.size.width, self.titleLabel.frame.size.height);
-                }
+                CGFloat leftSpace = (self.frame.size.width-self.imageView.frame.size.width-_space-self.titleLabel.frame.size.width)/2;
+                self.imageView.frame = CGRectMake(leftSpace, self.imageView.frame.origin.y, self.imageView.frame.size.width, self.imageView.frame.size.height);
+                self.titleLabel.frame = CGRectMake(leftSpace+self.imageView.frame.size.width+_space, self.titleLabel.frame.origin.y, self.titleLabel.frame.size.width, self.titleLabel.frame.size.height);
             }
                 break;
                 
