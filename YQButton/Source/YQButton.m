@@ -3,7 +3,7 @@
 //  YQButton
 //
 //  Created by 杨清 on 2017/6/13.
-//  Copyright © 2017年 Soargift. All rights reserved.
+//  Copyright © 2017年 QuinceyYang. All rights reserved.
 //
 
 #import "YQButton.h"
@@ -19,13 +19,15 @@
 
 typedef NS_ENUM(NSUInteger, YQButtonType) {
     YQButtonTypeDefault,
+    YQButtonTypeContentAtCenter,
     YQButtonTypeImageAtTop,
+    YQButtonTypeImageAtTopAndContentAtCenter,
     YQButtonTypeImageAtBottom,
+    YQButtonTypeImageAtBottomAndContentAtCenter,
     YQButtonTypeImageAtLeft,///<图片在左边，标题靠左，标题长度有限制
     YQButtonTypeImageAtLeftSelfAdaption, ///<图片在左边，标题自适应
     YQButtonTypeImageAtRight,///<图片在右边，标题靠左，标题长度有限制
     YQButtonTypeImageAtRightSelfAdaption, ///<图片在右边，标题自适应，且标题靠近图片
-    YQButtonTypeContentAtCenter,
     YQButtonTypeCustomFrame
 };
 
@@ -42,6 +44,34 @@ typedef NS_ENUM(NSUInteger, YQButtonType) {
 }
 
 #pragma mark - init methods
+
+/**
+ * 图片在左，标题在右，且图片和标题整体居中
+ */
+- (instancetype)initWithFrame:(CGRect)frame contentAtCenterWithSpace:(CGFloat)space
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        _yqButtonType = YQButtonTypeContentAtCenter;
+        _space = space;
+    }
+    
+    return self;
+}
+
+/**
+ * 图片在上，图片和标题整体居中
+ * @params space 图片与label之间的间隔
+ */
+- (instancetype)initWithFrame:(CGRect)frame imageAtTopWithSpace:(CGFloat)space {
+    self = [super initWithFrame:frame];
+    if (self) {
+        _yqButtonType = YQButtonTypeImageAtTopAndContentAtCenter;
+        _space = space;
+    }
+    return self;
+}
+
 /**
  * 图片在上
  */
@@ -154,22 +184,6 @@ typedef NS_ENUM(NSUInteger, YQButtonType) {
 }
 
 
-/**
- * 图片和标题整体居中，且图片在左，标题在右
- */
-- (instancetype)initWithFrame:(CGRect)frame contentAtCenterWithSpace:(CGFloat)space
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        _yqButtonType = YQButtonTypeContentAtCenter;
-        _space = space;
-    }
-    
-    return self;
-}
-
-
-
 #pragma mark -
 - (void)layoutSubviews
 {
@@ -179,96 +193,8 @@ typedef NS_ENUM(NSUInteger, YQButtonType) {
         return;
     }
     else {
-    
-        NSLog(@"");
-        CGSize imgSize = self.imageView.bounds.size;
-        CGSize titleSize = self.titleLabel.bounds.size;
-        CGRect newImageFrame = self.imageView.frame;
-        CGRect newTitleLabelFrame = self.titleLabel.frame;
-        
+        NSLog(@"  ++++++++++++");
         switch (_yqButtonType) {
-            case YQButtonTypeImageAtTop:
-            {
-                newImageFrame = CGRectMake(self.frame.size.width/2-imgSize.width/2, _topOffset, imgSize.width, imgSize.height);
-                self.imageView.frame = newImageFrame;
-                
-                self.titleLabel.textAlignment = NSTextAlignmentCenter;
-                newTitleLabelFrame = CGRectMake(0, CGRectGetMaxY(self.imageView.frame)+_space, self.frame.size.width, titleSize.height);
-                self.titleLabel.frame = newTitleLabelFrame;
-            }
-                break;
-                
-            case YQButtonTypeImageAtBottom:
-            {
-                self.titleLabel.textAlignment = NSTextAlignmentCenter;
-                newTitleLabelFrame = CGRectMake(0, _topOffset, self.frame.size.width, titleSize.height);
-                self.titleLabel.frame = newTitleLabelFrame;
-
-                newImageFrame = CGRectMake(self.frame.size.width/2-imgSize.width/2, CGRectGetMaxY(self.titleLabel.frame)+_space, imgSize.width, imgSize.height);
-                self.imageView.frame = newImageFrame;
-                
-            }
-                break;
-                
-            case YQButtonTypeImageAtLeft:
-            {
-                if (self.frame.size.width-_leftOffset-_space-_rightOffset-imgSize.width<=0) {
-                    NSLog(@"Error : self width is short");
-                    return;
-                }
-                newImageFrame = CGRectMake(_leftOffset, self.frame.size.height/2-imgSize.height/2, imgSize.width, imgSize.height);
-                self.imageView.frame = newImageFrame;
-                
-                self.titleLabel.textAlignment = NSTextAlignmentLeft;
-                newTitleLabelFrame = CGRectMake(CGRectGetMaxX(self.imageView.frame)+_space, self.frame.size.height/2-titleSize.height/2, self.frame.size.width-(CGRectGetMaxX(self.imageView.frame)+_space)-_rightOffset, titleSize.height);
-                self.titleLabel.frame = newTitleLabelFrame;
-            }
-                break;
-                
-            case YQButtonTypeImageAtLeftSelfAdaption:
-            {
-                if (self.frame.size.width-_leftOffset-_space-_rightOffset-imgSize.width<=0) {
-                    NSLog(@"Error : self width is short");
-                    return;
-                }
-                newImageFrame = CGRectMake(_leftOffset, self.frame.size.height/2-imgSize.height/2, imgSize.width, imgSize.height);
-                self.imageView.frame = newImageFrame;
-                
-                self.titleLabel.textAlignment = NSTextAlignmentLeft;
-                newTitleLabelFrame = CGRectMake(CGRectGetMaxX(self.imageView.frame)+_space, self.frame.size.height/2-titleSize.height/2, titleSize.width, titleSize.height);
-                self.titleLabel.frame = newTitleLabelFrame;
-            }
-                break;
-                
-            case YQButtonTypeImageAtRight:
-            {
-                if (self.frame.size.width-_leftOffset-_space-_rightOffset-imgSize.width<=0) {
-                    NSLog(@"Error : self width is short");
-                    return;
-                }
-                self.titleLabel.textAlignment = NSTextAlignmentLeft;
-                CGFloat titleW = self.frame.size.width-_leftOffset-_space-imgSize.width-_rightOffset;
-                newTitleLabelFrame = CGRectMake(_leftOffset, self.frame.size.height/2-titleSize.height/2, titleW, titleSize.height);
-                self.titleLabel.frame = newTitleLabelFrame;
-                
-                newImageFrame = CGRectMake(CGRectGetMaxX(self.titleLabel.frame)+_space, self.frame.size.height/2-imgSize.height/2, imgSize.width, imgSize.height);
-                self.imageView.frame = newImageFrame;            
-            }
-                break;
-                
-            case YQButtonTypeImageAtRightSelfAdaption:
-            {
-                if (self.frame.size.width-_space-_rightOffset-imgSize.width<=0) {
-                    NSLog(@"Error : self width is short");
-                    return;
-                }
-                newImageFrame = CGRectMake(self.frame.size.width-_rightOffset-imgSize.width, self.frame.size.height/2-imgSize.height/2, imgSize.width, imgSize.height);
-                self.imageView.frame = newImageFrame;
-
-                newTitleLabelFrame = CGRectMake(self.frame.size.width-_rightOffset-imgSize.width-_space-titleSize.width, self.frame.size.height/2-titleSize.height/2, titleSize.width, titleSize.height);
-                self.titleLabel.frame = newTitleLabelFrame;
-            }
-                break;
                 
             case YQButtonTypeContentAtCenter:
             {
@@ -278,16 +204,91 @@ typedef NS_ENUM(NSUInteger, YQButtonType) {
             }
                 break;
                 
+            case YQButtonTypeImageAtTop:
+            {
+                self.imageView.frame = CGRectMake((self.frame.size.width-self.imageView.frame.size.width)/2, _topOffset, self.imageView.frame.size.width, self.imageView.frame.size.height);
+                self.titleLabel.textAlignment = NSTextAlignmentCenter;
+                self.titleLabel.frame = CGRectMake(0, CGRectGetMaxY(self.imageView.frame)+_space, self.frame.size.width, self.titleLabel.frame.size.height);
+            }
+                break;
+                
+            case YQButtonTypeImageAtTopAndContentAtCenter:
+            {
+                CGFloat topOffset = (self.frame.size.height-self.imageView.frame.size.height-_space-self.titleLabel.frame.size.height)/2;
+                self.imageView.frame = CGRectMake((self.frame.size.width-self.imageView.frame.size.width)/2, topOffset, self.imageView.frame.size.width, self.imageView.frame.size.height);
+                self.titleLabel.frame = CGRectMake(0, CGRectGetMaxY(self.imageView.frame)+_space, self.frame.size.width, self.titleLabel.frame.size.height);
+            }
+                break;
+
+            case YQButtonTypeImageAtBottom:
+            {
+                self.titleLabel.textAlignment = NSTextAlignmentCenter;
+                self.titleLabel.frame = CGRectMake(0, _topOffset, self.frame.size.width, self.titleLabel.frame.size.height);
+                self.imageView.frame = CGRectMake((self.frame.size.width-self.imageView.frame.size.width)/2, CGRectGetMaxY(self.titleLabel.frame)+_space, self.imageView.frame.size.width, self.imageView.frame.size.height);
+            }
+                break;
+                
+            case YQButtonTypeImageAtBottomAndContentAtCenter:
+            {
+                CGFloat topOffset = (self.frame.size.height-self.imageView.frame.size.height-self.titleLabel.frame.size.height-_space)/2;
+                self.titleLabel.textAlignment = NSTextAlignmentCenter;
+                self.titleLabel.frame = CGRectMake(0, topOffset, self.frame.size.width, self.titleLabel.frame.size.height);
+                self.imageView.frame = CGRectMake((self.frame.size.width-self.imageView.frame.size.width)/2, CGRectGetMaxY(self.titleLabel.frame)+_space, self.imageView.frame.size.width, self.imageView.frame.size.height);
+            }
+                break;
+                
+            case YQButtonTypeImageAtLeft:
+            {
+                if (self.frame.size.width-_leftOffset-_space-_rightOffset-self.imageView.frame.size.width < 0) {
+                    NSLog(@"Error : self width is short");
+                    return;
+                }
+                self.imageView.frame = CGRectMake(_leftOffset, (self.frame.size.height-self.imageView.frame.size.height)/2, self.imageView.frame.size.width, self.imageView.frame.size.height);
+                self.titleLabel.textAlignment = NSTextAlignmentLeft;
+                self.titleLabel.frame = CGRectMake(CGRectGetMaxX(self.imageView.frame)+_space, (self.frame.size.height-self.titleLabel.frame.size.height)/2, self.frame.size.width-(CGRectGetMaxX(self.imageView.frame)+_space)-_rightOffset, self.titleLabel.frame.size.height);
+            }
+                break;
+                
+            case YQButtonTypeImageAtLeftSelfAdaption:
+            {
+                if (self.frame.size.width-_leftOffset-_space-self.imageView.frame.size.width < 0) {
+                    NSLog(@"Error : self width is short");
+                    return;
+                }
+                self.imageView.frame = CGRectMake(_leftOffset, (self.frame.size.height-self.imageView.frame.size.height)/2, self.imageView.frame.size.width, self.imageView.frame.size.height);
+                self.titleLabel.textAlignment = NSTextAlignmentLeft;
+                self.titleLabel.frame = CGRectMake(CGRectGetMaxX(self.imageView.frame)+_space, (self.frame.size.height-self.titleLabel.frame.size.height)/2, self.titleLabel.frame.size.width, self.titleLabel.frame.size.height);
+            }
+                break;
+                
+            case YQButtonTypeImageAtRight:
+            {
+                if (self.frame.size.width-_leftOffset-_space-_rightOffset-self.imageView.frame.size.width < 0) {
+                    NSLog(@"Error : self width is short");
+                    return;
+                }
+                self.titleLabel.textAlignment = NSTextAlignmentLeft;
+                CGFloat titleW = self.frame.size.width-_leftOffset-_space-self.imageView.frame.size.width-_rightOffset;
+                self.titleLabel.frame = CGRectMake(_leftOffset, (self.frame.size.height-self.titleLabel.frame.size.height)/2, titleW, self.titleLabel.frame.size.height);
+                self.imageView.frame = CGRectMake(CGRectGetMaxX(self.titleLabel.frame)+_space, (self.frame.size.height-self.imageView.frame.size.height)/2, self.imageView.frame.size.width, self.imageView.frame.size.height);
+            }
+                break;
+                
+            case YQButtonTypeImageAtRightSelfAdaption:
+            {
+                if (self.frame.size.width-_space-self.imageView.frame.size.width-_rightOffset < 0) {
+                    NSLog(@"Error : self width is short");
+                    return;
+                }
+                self.imageView.frame = CGRectMake(self.frame.size.width-_rightOffset-self.imageView.frame.size.width, (self.frame.size.height-self.imageView.frame.size.height)/2, self.imageView.frame.size.width, self.imageView.frame.size.height);
+                self.titleLabel.frame = CGRectMake(self.frame.size.width-_rightOffset-self.imageView.frame.size.width-_space-self.titleLabel.frame.size.width, (self.frame.size.height-self.titleLabel.frame.size.height)/2, self.titleLabel.frame.size.width, self.titleLabel.frame.size.height);
+            }
+                break;
+                
             case YQButtonTypeCustomFrame:
             {
-                if (CGRectContainsRect(self.bounds, _imageFrame) && CGRectContainsRect(self.bounds, _titleFrame)) {
-                    self.imageView.contentMode = UIViewContentModeCenter;
-                    self.imageView.frame = _imageFrame;
-                    self.titleLabel.frame = _titleFrame;
-                }
-                else {
-                    NSLog(@"Error : frame error");
-                }
+                self.imageView.frame = _imageFrame;
+                self.titleLabel.frame = _titleFrame;
             }
                 break;
                 

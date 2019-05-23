@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
 s.name         = "YQButton"
-s.version      = "1.1"
+s.version      = "1.2"
 s.summary      = "YQButton can easy to set image and label position."
 
   # This description is used to generate tags and improve search results.
